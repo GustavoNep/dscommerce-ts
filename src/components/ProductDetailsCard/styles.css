@@ -4,6 +4,13 @@
     padding: 20px 0;
 }
 
+.dsc-container {
+    width: 100%;
+    max-width: 960px;
+
+    margin: 0 auto;
+}
+
 .dsc-product-details-top {
     padding: 10px;
     display: flex;
@@ -58,9 +65,8 @@
     border: 1px solid var(--dsc-color-card-border);
     border-radius: 4px;
     background-color: var(--dsc-color-card-bg);
-  }
-  
-  .dsc-line-bottom {
+}
+
+.dsc-line-bottom {
     border-bottom: 1px solid var(--dsc-color-card-border);
-  }
-  
+}
