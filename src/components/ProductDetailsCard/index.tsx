@@ -29,10 +29,7 @@ export default function ProductDetailsCard({ product }: Props) {
           </div>
         </div>
       </div>
-      <div className="dsc-btn-page-container">
-        <ButtonPrimary text="Comprar" />
-        <ButtonInverse text="Voltar"/>
-      </div>
+      
     </>
   );
 }

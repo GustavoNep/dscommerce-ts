@@ -1,16 +1,24 @@
-import './styles.css'
-import computImg from '../../assets/notbook.png'
+import "./styles.css";
+import computImg from "../../assets/notbook.png";
+import { ProductDTO } from "../../models/product";
+import { Link } from "react-router-dom";
 
-export default function ProductCard() {
+type Props = {
+  product: ProductDTO;
+};
+
+export default function ProductCard({ product }: Props) {
   return (
-    <div className="dsc-card">
-      <div className="dsc-catalog-card-top dsc-line-bottom">
-        <img src={computImg} alt="Computer" />
+    <Link to={`/product-details/${product.id}`}>
+      <div className="dsc-card">
+        <div className="dsc-catalog-card-top dsc-line-bottom">
+          <img src={product.imgUrl} alt={product.name} />
+        </div>
+        <div className="dsc-catalog-card-bottom">
+          <h3>R$ {product.price}</h3>
+          <h4>{product.name}</h4>
+        </div>
       </div>
-      <div className="dsc-catalog-card-bottom">
-        <h3>R$ 5000,00</h3>
-        <h4>Computador Gamer XT</h4>
-      </div>
-    </div>
+    </Link>
   );
 }
