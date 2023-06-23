@@ -7,10 +7,9 @@ import { ProductDTO } from "../../models/product";
 
 type Props = {
   product: ProductDTO;
-}
+};
 
-
-export default function ProductDetailsCard({ product } : Props) {
+export default function ProductDetailsCard({ product }: Props) {
   return (
     <>
       <div className="dsc-card dsc-mb20">
@@ -20,18 +19,19 @@ export default function ProductDetailsCard({ product } : Props) {
         <div className="dsc-product-details-bottom">
           <h3>R$ {product.price}</h3>
           <h4>{product.name}</h4>
-          <p>
-            {product.description}
-          </p>
+          <p>{product.description}</p>
           <div className="dsc-category-container">
-            <ProductCategory name="Eletrônicos"/>
-            <ProductCategory name="Computadores"/>
+            {
+              product.categories.map((item) => {
+                return <ProductCategory name={item.name} key={item.id}/>
+              })
+            }
           </div>
         </div>
       </div>
       <div className="dsc-btn-page-container">
-        <ButtonPrimary />
-        <ButtonInverse />
+        <ButtonPrimary text="Comprar" />
+        <ButtonInverse text="Voltar"/>
       </div>
     </>
   );
