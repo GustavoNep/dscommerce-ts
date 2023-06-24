@@ -24,12 +24,6 @@ export default function Cart() {
   
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
-  useEffect(() => {
-    const cart: OrderDTO = new OrderDTO();
-    cart.items.push(item1);
-    cart.items.push(item2);
-    cartService.saveCart(cart);
-  }, [])
 
   return (
     <main>
