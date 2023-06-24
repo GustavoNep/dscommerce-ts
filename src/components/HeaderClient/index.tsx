@@ -18,7 +18,6 @@ export default function HeaderClient() {
             </div>
           </div>
           <Link to="/login">Entrar</Link>
-          <a href="#">Entrar</a>
         </div>
       </nav>
     </header>
