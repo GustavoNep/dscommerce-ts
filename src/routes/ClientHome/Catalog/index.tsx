@@ -18,6 +18,7 @@ export default function Catalog() {
       .then(response => {
         setProducts(response.data.content);
       })
+      
   }, [])
 
   return (
