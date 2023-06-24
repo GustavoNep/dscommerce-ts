@@ -8,7 +8,7 @@ const item1: OrderItemDTO = new OrderItemDTO(
   1,
   "PC GAMER",
   1200,
-  "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/4-big.jp"
+  "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/4-big.jpg"
 );
 
 const item2: OrderItemDTO = new OrderItemDTO(
@@ -19,16 +19,17 @@ const item2: OrderItemDTO = new OrderItemDTO(
   "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/5-big.jpg"
 );
 
-const cart : OrderDTO = new OrderDTO();
-
 export default function Cart() {
+
+  
+  const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
+
   useEffect(() => {
-    
+    const cart: OrderDTO = new OrderDTO();
     cart.items.push(item1);
     cart.items.push(item2);
-
     cartService.saveCart(cart);
-  }, []);
+  }, [])
 
   return (
     <main>
