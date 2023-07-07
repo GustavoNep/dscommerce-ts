@@ -11,11 +11,9 @@ export default function Catalog() {
 
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
-
   useEffect(() => {
 
-    
-    productService.findAll()
+    productService.findPageRequest(0, "", )
       .then(response => {
         setProducts(response.data.content);
       })
@@ -26,12 +24,15 @@ export default function Catalog() {
     <main>
       <section id="catalog-section" className="dsc-container">
         <SearchBar />
+
         <div className="dsc-catalog-cards dsc-mb20 dsc-mt20">
           {
             products.map(product => <ProductCard key={product.id} product={product}/>)
           } 
         </div>
+
         <LoadingMore />
+
       </section>
     </main>
   );
