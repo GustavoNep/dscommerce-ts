@@ -5,25 +5,38 @@ import LoadingMore from "../../../components/LoadingMore";
 import * as productService from '../../../services/product-service'
 import { useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product";
-import { CategoryDTO } from "../../../models/category";
+
+type QueryParams = {
+  page: number;
+  name: string;
+}
 
 export default function Catalog() {
 
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
-  const [productName, setProductName] = useState("");
+  const [queryParams, setQueryParams] = useState<QueryParams>({
+    page: 0,
+    name: ""
+  });
 
   useEffect(() => {
 
-    productService.findPageRequest(0, productName )
+    productService.findPageRequest(queryParams.page, queryParams.name )
       .then(response => {
-        setProducts(response.data.content);
+        const nextPage = response.data.content; 
+        setProducts(products.concat(nextPage));
       })
       
-  }, [productName])
+  }, [queryParams])
 
   function handleSearch(searchText: string) {
-    setProductName(searchText)
+    setProducts([]);
+    setQueryParams({...queryParams, page: 0, name: searchText});
+  }
+
+  function handleNextPageClick() {
+    setQueryParams({...queryParams, page: queryParams.page + 1})
   }
 
   return (
@@ -37,7 +50,10 @@ export default function Catalog() {
           } 
         </div>
 
-        <LoadingMore />
+        <div onClick={handleNextPageClick}>
+          <LoadingMore />
+        </div>
+
 
       </section>
     </main>
