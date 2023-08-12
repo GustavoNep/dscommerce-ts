@@ -13,6 +13,8 @@ type QueryParams = {
 
 export default function Catalog() {
 
+  const [isLastPage, setIsLastPage] = useState(false);
+
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
   const [queryParams, setQueryParams] = useState<QueryParams>({
@@ -26,6 +28,7 @@ export default function Catalog() {
       .then(response => {
         const nextPage = response.data.content; 
         setProducts(products.concat(nextPage));
+        setIsLastPage(response.data.last);
       })
       
   }, [queryParams])
@@ -50,9 +53,13 @@ export default function Catalog() {
           } 
         </div>
 
-        <div onClick={handleNextPageClick}>
-          <LoadingMore />
-        </div>
+        {
+          !isLastPage &&
+          <div onClick={handleNextPageClick}>
+            <LoadingMore />
+          </div>
+
+        }
 
 
       </section>
