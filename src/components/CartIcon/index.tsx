@@ -1,12 +1,17 @@
-import { Link } from "react-router-dom";
 import cartIcon from "../../assets/cart.svg";
 import "./style.css";
+import { useContext, useState } from "react";
+import { ContextCartCount } from "../../utils/context-cart";
 
 export default function CartIcon() {
+
+
+  const {contextCartCount} = useContext(ContextCartCount);
+
   return (
     <>
       <img src={cartIcon} alt="Carrinho de compras" />
-      <div className="dsc-cart-count">2</div>
+      <div className="dsc-cart-count">{contextCartCount}</div>
     </>
   );
 }
