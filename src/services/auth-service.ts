@@ -6,13 +6,15 @@ import { requestBackend } from "../utils/requests";
 import * as accessTokenRepository from '../localstorage/acess-token-repository';
 
 export function loginRequest(loginData: CredentialsDTO) {
+
     // credencias da aplicação + credenciais do usuario -> TOKEN JWT
+
     const headers = {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": "Basic " + window.btoa(CLIENT_ID + ":" + CLIENT_SECRET)
+        Authorization: "Basic " + window.btoa(CLIENT_ID + ":" + CLIENT_SECRET)
     }
 
-    const requestBody = QueryString.stringify({...loginData, grant_type: "password"});
+    const requestBody = QueryString.stringify({...loginData, grant_type: "password"}); // gerando o objeto xxx-form-urlencoded
 
     const config: AxiosRequestConfig = {
         method: "POST",
@@ -34,5 +36,5 @@ export function saveAccessToken(token: string) {
 }
 
 export function getAccessToken() {
-    accessTokenRepository.get();
+    return accessTokenRepository.get();
 }
