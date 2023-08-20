@@ -10,6 +10,7 @@ import Admin from "./routes/ClientHome/Admin";
 import AdminHome from "./routes/ClientHome/Admin/AdminHome";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import {history} from './utils/history'
+import { PrivateRoute } from "./components/PrivateRoute";
 
 function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
@@ -28,7 +29,11 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="login" element={<Login />} />
           </Route>
-          <Route path="/admin/" element={<Admin />}>
+          <Route path="/admin/" element={
+            <PrivateRoute>
+              <Admin />
+            </PrivateRoute>
+          }>
             <Route index element={<AdminHome />}/>
 
           </Route>
