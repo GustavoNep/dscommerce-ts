@@ -10,3 +10,4 @@ export type AccessTokenPayloadDTO = {
     user_name: string,
     authorities: RoleEnum[],
 };
+
