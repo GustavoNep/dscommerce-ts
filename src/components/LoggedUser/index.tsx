@@ -3,8 +3,6 @@ import * as authService from '../../services/auth-service';
 import { ContextToken } from '../../utils/context-token';
 import { useContext } from 'react';
 
-
-
 export default function LoggedUser() {
 
     const { contextTokenPayload , setContextTokenPayload } = useContext(ContextToken);
@@ -28,7 +26,5 @@ export default function LoggedUser() {
             </Link>
 
             )
-
-
     );
 }
