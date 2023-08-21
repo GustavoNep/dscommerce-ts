@@ -1,9 +1,9 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {  Navigate, Route, Routes } from "react-router-dom";
 import Catalog from "./routes/ClientHome/Catalog";
 import ProductDetails from "./routes/ClientHome/ProductDetails";
 import ClientHome from "./routes/ClientHome";
 import Cart from "./routes/ClientHome/Cart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ContextCartCount } from "./utils/context-cart";
 import Login from "./routes/ClientHome/Login";
 import Admin from "./routes/ClientHome/Admin";
@@ -11,11 +11,26 @@ import AdminHome from "./routes/ClientHome/Admin/AdminHome";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import {history} from './utils/history'
 import { PrivateRoute } from "./components/PrivateRoute";
+import { AccessTokenPayloadDTO } from "./models/auth";
+import { ContextToken } from "./utils/context-token";
+import * as authService from './services/auth-service';
+import * as cartService from './services/cart-service';
 
 function App() {
   const [contextCartCount, setContextCartCount] = useState<number>(0);
+  const [contextTokenPayload, setContextTokenPayload] = useState<AccessTokenPayloadDTO>();
+
+  useEffect(() => {
+    setContextCartCount(cartService.getCart().items.length);
+
+    if (authService.isAthenticated()) {
+      const payload = authService.getAccessTokenPayload();
+      setContextTokenPayload(payload);
+    }
+  }, []);
 
   return (
+    <ContextToken.Provider value={{contextTokenPayload, setContextTokenPayload}}>
     <ContextCartCount.Provider value={{contextCartCount, setContextCartCount}}>
       <HistoryRouter history={history}>
         <Routes>
@@ -42,6 +57,7 @@ function App() {
         </Routes>
       </HistoryRouter>
     </ContextCartCount.Provider>
+    </ContextToken.Provider>
   );
 }
 
