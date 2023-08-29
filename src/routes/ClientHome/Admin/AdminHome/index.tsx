@@ -3,14 +3,9 @@ import './styles.css';
 import { UserDTO } from '../../../../models/user';
 import * as userService from '../../../../services/user-service';
 
-
-
-
 export default function AdminHome() {
-
+  
     const [user, setUser] = useState<UserDTO>();
-
-    
 
     useEffect(() => {
         userService.findMe()
