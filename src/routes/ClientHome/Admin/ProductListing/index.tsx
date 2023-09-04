@@ -7,6 +7,7 @@ import * as productService from "../../../../services/product-service";
 import { ProductDTO } from "../../../../models/product";
 import SearchBar from "../../../../components/SearchBar";
 import LoadingMore from "../../../../components/LoadingMore";
+import DialogInfo from "../../../../components/DialogInfo";
 
 type QueryParams = {
   page: number;
@@ -100,8 +101,8 @@ export default function ProductListing() {
           !isLastPage && 
           <LoadingMore onNextPage={handleNextPageClick}/>
         }
-
       </section>
+      <DialogInfo />
     </main>
   );
 }
