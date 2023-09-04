@@ -28,7 +28,7 @@ export default function SearchBar({onSearch} : Props) {
     <form className="dsc-search-bar" onSubmit={handleSubmit}>
       <button type="submit">🔎︎</button>
       <input value={text} type="text" placeholder="Nome do produto" onChange={handleChange}/>
-      <button onClick={handleResetClick}>🗙</button>
+      <button onClick={handleResetClick}></button>
     </form>
   );
 }

@@ -1,11 +1,13 @@
 import './styles.css'
 
 
+type Props = {
+    onNextPage: () => void,
+}
 
-
-export default function LoadingMore() {
+export default function LoadingMore({onNextPage}: Props) {
 
     return(
-        <div className="dsc-btn-next-page" >Carregar mais</div>
+        <div onClick={() => onNextPage()} className="dsc-btn-next-page" >Carregar mais</div>
     )
 }

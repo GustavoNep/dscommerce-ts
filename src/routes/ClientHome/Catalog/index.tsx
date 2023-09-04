@@ -2,7 +2,7 @@ import "./styles.css";
 import ProductCard from "../../../components/ProductCard";
 import SearchBar from "../../../components/SearchBar";
 import LoadingMore from "../../../components/LoadingMore";
-import * as productService from '../../../services/product-service'
+import * as productService from "../../../services/product-service";
 import { useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product";
 import { isAthenticated } from "../../../services/auth-service";
@@ -10,36 +10,35 @@ import { isAthenticated } from "../../../services/auth-service";
 type QueryParams = {
   page: number;
   name: string;
-}
+};
 
 export default function Catalog() {
-
   const [isLastPage, setIsLastPage] = useState(false);
 
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
   const [queryParams, setQueryParams] = useState<QueryParams>({
     page: 0,
-    name: ""
+    name: "",
   });
 
   useEffect(() => {
-    productService.findPageRequest(queryParams.page, queryParams.name)
-      .then(response => {
-        const nextPage = response.data.content; 
+    productService
+      .findPageRequest(queryParams.page, queryParams.name)
+      .then((response) => {
+        const nextPage = response.data.content;
         setProducts(products.concat(nextPage));
         setIsLastPage(response.data.last);
-      })
-      
-  }, [queryParams])
+      });
+  }, [queryParams]);
 
   function handleSearch(searchText: string) {
     setProducts([]);
-    setQueryParams({...queryParams, page: 0, name: searchText});
+    setQueryParams({ ...queryParams, page: 0, name: searchText });
   }
 
   function handleNextPageClick() {
-    setQueryParams({...queryParams, page: queryParams.page + 1})
+    setQueryParams({ ...queryParams, page: queryParams.page + 1 });
   }
 
   return (
@@ -48,20 +47,12 @@ export default function Catalog() {
         <SearchBar onSearch={handleSearch} />
 
         <div className="dsc-catalog-cards dsc-mb20 dsc-mt20">
-          {
-            products.map(product => <ProductCard key={product.id} product={product}/>)
-          } 
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
 
-        {
-          !isLastPage &&
-          <div onClick={handleNextPageClick}>
-            <LoadingMore />
-          </div>
-
-        }
-
-
+        {!isLastPage && <LoadingMore onNextPage={handleNextPageClick} />}
       </section>
     </main>
   );
