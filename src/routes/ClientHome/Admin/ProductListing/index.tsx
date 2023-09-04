@@ -8,6 +8,7 @@ import { ProductDTO } from "../../../../models/product";
 import SearchBar from "../../../../components/SearchBar";
 import LoadingMore from "../../../../components/LoadingMore";
 import DialogInfo from "../../../../components/DialogInfo";
+import DialogConfirmation from "../../../../components/DialogConfirmation";
 
 type QueryParams = {
   page: number;
@@ -15,10 +16,14 @@ type QueryParams = {
 };
 
 export default function ProductListing() {
-
   const [dialogInfoData, setDialogInfoData] = useState({
     visible: false,
-    message: "Operação com sucesso!"
+    message: "Operação com sucesso!",
+  });
+
+  const [dialogConfirmationData, setDialogConfirmationData] = useState({
+    visible: false,
+    message: "Tem certeza ?",
   });
 
   const [isLastPage, setIsLastPage] = useState(false);
@@ -31,13 +36,12 @@ export default function ProductListing() {
   });
 
   function handleDialogInfoClose() {
-    setDialogInfoData({...dialogInfoData, visible: false})
+    setDialogInfoData({ ...dialogInfoData, visible: false });
   }
 
   function handleDeleteClick() {
-    setDialogInfoData({...dialogInfoData, visible: true})
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: true });
   }
-
 
   useEffect(() => {
     productService
@@ -51,13 +55,16 @@ export default function ProductListing() {
 
   function handleSearch(searchText: string) {
     setProducts([]);
-    setQueryParams({...queryParams, page: 0, name: searchText});
+    setQueryParams({ ...queryParams, page: 0, name: searchText });
   }
 
   function handleNextPageClick() {
-    setQueryParams({...queryParams, page: queryParams.page + 1})
+    setQueryParams({ ...queryParams, page: queryParams.page + 1 });
   }
 
+  function handleDialogConfirmationAnswer(answer: boolean) {
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: false })
+  }
 
   return (
     <main>
@@ -113,17 +120,21 @@ export default function ProductListing() {
             ))}
           </tbody>
         </table>
-        {
-          !isLastPage && 
-          <LoadingMore onNextPage={handleNextPageClick}/>
-        }
+        {!isLastPage && <LoadingMore onNextPage={handleNextPageClick} />}
       </section>
-      {
-        dialogInfoData.visible && 
-        <DialogInfo 
-          message={dialogInfoData.message} 
-          onDialogClose={handleDialogInfoClose} />
-      }
+      {dialogInfoData.visible && (
+        <DialogInfo
+          message={dialogInfoData.message}
+          onDialogClose={handleDialogInfoClose}
+        />
+      )}
+
+      {dialogConfirmationData.visible && (
+        <DialogConfirmation
+          message={dialogInfoData.message}
+          onDialogAnswer={handleDialogConfirmationAnswer}
+        />
+      )}
     </main>
   );
 }
