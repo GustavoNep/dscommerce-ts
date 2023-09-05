@@ -23,6 +23,7 @@ export default function ProductListing() {
 
   const [dialogConfirmationData, setDialogConfirmationData] = useState({
     visible: false,
+    id: 0,
     message: "Tem certeza ?",
   });
 
@@ -39,8 +40,8 @@ export default function ProductListing() {
     setDialogInfoData({ ...dialogInfoData, visible: false });
   }
 
-  function handleDeleteClick() {
-    setDialogConfirmationData({ ...dialogConfirmationData, visible: true });
+  function handleDeleteClick(productId: number) {
+    setDialogConfirmationData({ ...dialogConfirmationData, id:productId, visible: true });
   }
 
   useEffect(() => {
@@ -62,7 +63,20 @@ export default function ProductListing() {
     setQueryParams({ ...queryParams, page: queryParams.page + 1 });
   }
 
-  function handleDialogConfirmationAnswer(answer: boolean) {
+  function handleDialogConfirmationAnswer(answer: boolean, productId: number) {
+    if (answer) {
+      productService.deleteById(productId)
+        .then(() => {
+          setProducts([]);
+          setQueryParams({ ...queryParams, page: 0 });
+        })
+        .catch(error => {
+          setDialogInfoData({
+            visible: true,
+            message: error.response.data.error
+          })
+        })
+    }
     setDialogConfirmationData({ ...dialogConfirmationData, visible: false })
   }
 
@@ -110,7 +124,7 @@ export default function ProductListing() {
                 </td>
                 <td>
                   <img
-                    onClick={handleDeleteClick}
+                    onClick={() => handleDeleteClick(product.id)}
                     className="dsc-product-listing-btn"
                     src={deletIcon}
                     alt="Deletar"
@@ -131,6 +145,7 @@ export default function ProductListing() {
 
       {dialogConfirmationData.visible && (
         <DialogConfirmation
+          id={dialogConfirmationData.id}
           message={dialogInfoData.message}
           onDialogAnswer={handleDialogConfirmationAnswer}
         />
