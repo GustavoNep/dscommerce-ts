@@ -37,11 +37,11 @@ export default function ProductListing() {
   });
 
   function handleDialogInfoClose() {
-    setDialogInfoData({ ...dialogInfoData, visible: false });
+    setDialogInfoData({ ...dialogInfoData, visible: false,  });
   }
 
   function handleDeleteClick(productId: number) {
-    setDialogConfirmationData({ ...dialogConfirmationData, id:productId, visible: true });
+    setDialogConfirmationData({ ...dialogConfirmationData, id: productId, visible: true });
   }
 
   useEffect(() => {
@@ -146,7 +146,7 @@ export default function ProductListing() {
       {dialogConfirmationData.visible && (
         <DialogConfirmation
           id={dialogConfirmationData.id}
-          message={dialogInfoData.message}
+          message={dialogConfirmationData.message}
           onDialogAnswer={handleDialogConfirmationAnswer}
         />
       )}
