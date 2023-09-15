@@ -1,11 +1,11 @@
 import "./styles.css";
 import { useState } from "react";
-import { CredentialsDTO } from "../../../models/auth";
 import * as authService from "../../../services/auth-service";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ContextToken } from "../../../utils/context-token";
 import { useContext } from "react";
 import FormInput from "../../../components/FormInput";
+import * as forms from '../../../utils/forms'
 
 export default function Login() {
   const { setContextTokenPayload } = useContext(ContextToken);
@@ -52,7 +52,7 @@ export default function Login() {
   function handleInputChange(event: any) {
     const value = event.target.value;
     const name = event.target.name;
-    setFormData({ ...formData, [name]: {...formData[name], value: value } });
+    setFormData(forms.update(formData, name, value));
   }
 
   return (
