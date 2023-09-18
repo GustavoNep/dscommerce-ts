@@ -39,7 +39,6 @@ export default function ProductForm() {
   });
 
   useEffect(() => {
-
     if (isEditing) {
       productService.findById(Number(params.productId)).then((response) => {
         console.log(response.data);
@@ -50,15 +49,12 @@ export default function ProductForm() {
   }, []);
 
   function handleInputChange(event: any) {
-    const value = event.target.value;
-    const name = event.target.name;
-    const dataUpdate = forms.update(formData, name, value);
-    const dataValidated = forms.validate(dataUpdate, event.target.name);
-    setFormData(dataValidated);
+     const result = forms.updateAndValidate(formData, event.target.name, event.target.value);
+     setFormData(result);
   }
 
   function handleInputTurnDirty(name: string) {
-    const newFormData = forms.toDirty(formData, name);
+    const newFormData = forms.dirtyAndValidate(formData, name);
     setFormData(newFormData);
   }
 
