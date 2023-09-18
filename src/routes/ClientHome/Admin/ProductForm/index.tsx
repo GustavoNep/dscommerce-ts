@@ -39,6 +39,11 @@ export default function ProductForm() {
   });
 
   useEffect(() => {
+
+    const result = forms.toDirty(formData, "price");
+    console.log(result);
+    
+
     if (isEditing) {
       productService.findById(Number(params.productId)).then((response) => {
         console.log(response.data);
