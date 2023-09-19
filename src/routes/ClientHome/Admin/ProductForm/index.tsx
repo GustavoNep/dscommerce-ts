@@ -1,21 +1,20 @@
-import { Link, useParams } from "react-router-dom";
 import "./styles.css";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import FormInput from "../../../../components/FormInput";
 import * as forms from "../../../../utils/forms";
 import * as productService from "../../../../services/product-service";
 import * as categoryService from '../../../../services/category-service';
 import FormTextArea from "../../../../components/FormTextArea";
-
-import Select from 'react-select'
 import { CategoryDTO } from "../../../../models/category";
+import FormSelect from "../../../../components/FormSelect";
 
 export default function ProductForm() {
   const params = useParams();
 
   const isEditing = params.productId !== "create";
 
-  const [ categories, setCategories] = useState<CategoryDTO>([])
+  const [ categories, setCategories] = useState<CategoryDTO[]>([]);
 
   const [formData, setFormData] = useState<any>({
     name: {
@@ -57,6 +56,16 @@ export default function ProductForm() {
         return value.length >= 10 && value.length <= 500
       },
       message: "Deve ter pelo menos 10 caracteres"
+    },
+    categories: {
+      value: [],
+      id: "categories",
+      name: "categories",
+      placeholder: "Categorias",
+      validation: function(value: CategoryDTO[]) {
+        return value.length > 0;
+      },
+      message: "Escolha ao menos uma categoria"
     }
   });
 
@@ -130,8 +139,14 @@ export default function ProductForm() {
                 <div className="dsc-form-error">{formData.description.message}</div>
               </div>
               <div>
-                <Select 
+                <FormSelect 
+                  {...formData.categories}
                   options={categories}
+                  onChange={(obj: any) => {
+                    const newFormData = forms.updateAndValidate(formData, "categories", obj);
+                    setFormData(newFormData);
+                  }}
+                  onTurnDirty={handleInputTurnDirty}
                   isMulti  
                   getOptionLabel={(obj: any) => obj.name}
                   getOptionValue={(obj: any) => String(obj.id)}
