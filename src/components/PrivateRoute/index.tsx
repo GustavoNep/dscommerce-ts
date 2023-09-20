@@ -3,11 +3,11 @@ import * as authService from "../../services/auth-service";
 import { RoleEnum } from "../../models/auth";
 
 type Props = {
-  children: JSX.Element;
+  children: JSX.Element[] | JSX.Element;
   roles?: RoleEnum[];
 };
 
-export function PrivateRoute({ children, roles = [] }: Props) {
+export function PrivateRoute({ children = []}: Props) {
   if (!authService.isAthenticated()) {
     return <Navigate to="/login" />;
   }

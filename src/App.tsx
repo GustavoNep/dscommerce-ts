@@ -48,7 +48,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route
               path="confirmation/:orderId"
-              element={<PrivateRoute><Confirmation /></PrivateRoute>}
+              element={<PrivateRoute><Confirmation/></PrivateRoute>}
             />
           </Route>
           <Route path="/admin/" element={
@@ -60,7 +60,6 @@ function App() {
             <Route path="home" element={<AdminHome />}/>
             <Route path="products" element={<ProductListing />} />
             <Route path="products/:productId" element={<ProductForm />} />
-
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
 

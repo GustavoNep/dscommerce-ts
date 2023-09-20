@@ -1,8 +1,5 @@
 import "./styles.css";
-import notImg from "../../assets/notbook.png";
 import ProductCategory from "../ProductCategory";
-import ButtonPrimary from "../ButtonPrimary";
-import ButtonInverse from "../ButtonInverse";
 import { ProductDTO } from "../../models/product";
 
 type Props = {

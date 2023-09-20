@@ -1,5 +1,4 @@
 import "./styles.css";
-import computImg from "../../assets/notbook.png";
 import { ProductDTO } from "../../models/product";
 import { Link } from "react-router-dom";
 
