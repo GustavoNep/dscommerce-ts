@@ -44,6 +44,9 @@ export default function ProductListing() {
   function handleDialogInfoClose() {
     setDialogInfoData({ ...dialogInfoData, visible: false,  });
   }
+  function handleUpdateClick(productId: number) {
+    navigate(`/admin/products/${productId}`)
+  }
 
   function handleDeleteClick(productId: number) {
     setDialogConfirmationData({ ...dialogConfirmationData, id: productId, visible: true });
@@ -133,6 +136,7 @@ export default function ProductListing() {
                     className="dsc-product-listing-btn"
                     src={editIcon}
                     alt="Editar"
+                    onClick={() => handleUpdateClick(product.id)}
                   />
                 </td>
                 <td>
