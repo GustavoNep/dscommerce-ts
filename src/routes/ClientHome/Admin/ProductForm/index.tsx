@@ -112,10 +112,19 @@ export default function ProductForm() {
       requestBody.id = params.productId;
     }
 
-    productService.updateRequest(requestBody)
+    const request = isEditing 
+    ?  productService.updateRequest(requestBody)
+    :  productService.insertRequest(requestBody);
+    
+    request
       .then( () => {
         navigate("/admin/products");
-      });
+      })
+      .catch(error => {
+        const newInputs = forms.setBackendErrors(formData, error.response.data.errors);
+        setFormData(newInputs);
+      })
+      
   }
   return (
     <main>
@@ -187,8 +196,6 @@ export default function ProductForm() {
               <button type="submit" className="dsc-btn dsc-btn-blue">
                 Salvar
               </button>
-              
-              
             </div>
           </form>
         </div>

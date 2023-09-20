@@ -1,7 +1,6 @@
 import "./styles.css";
 import editIcon from "../../../../assets/edit.svg";
 import deletIcon from "../../../../assets/trash.svg";
-import product from "../../../../assets/computer.png";
 import { useEffect, useState } from "react";
 import * as productService from "../../../../services/product-service";
 import { ProductDTO } from "../../../../models/product";
